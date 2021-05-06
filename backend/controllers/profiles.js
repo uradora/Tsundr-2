@@ -58,4 +58,3 @@ exports.createProfile = async (request, response) => {
 
 //TODO: add a route for modifying own profile
 
-module.exports = notesRouter

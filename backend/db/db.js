@@ -1,11 +1,11 @@
 const path = require('path')
 
-const db = path.resolve(__dirname, 'db/database.sqlite')
+const dbPath = path.resolve(__dirname, 'database.sqlite')
 
 const knex = require('knex')({
   client: 'sqlite3',
   connection: {
-    filename: db,
+    filename: dbPath,
   },
   useNullAsDefault: true
 })
@@ -24,7 +24,7 @@ knex.schema
           console.log('Table \'Profiles\' created')
         })
         .catch((error) => {
-          console.error(`Error: ${error}`)
+          console.error(`Cannot create table: ${error}`)
         })
       }
     })
@@ -32,7 +32,7 @@ knex.schema
       console.log('Ready!')
     })
     .catch((error) => {
-      console.error(`Error: ${error}`)
+      console.error(`Cannot open: ${error}`)
     })
 
 knex.select('*').from('profiles')
