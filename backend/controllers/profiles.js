@@ -12,12 +12,12 @@ exports.getAll = async (request, response) => {
     })
 }
 
-exports.getProfile = async (request, response) => {
+exports.getProfile = async ( request, response) => {
   knex('profiles')
     .where('id', request.body.id)  
     .then((profile) => {
       if (profile) {
-        response.json(profile.toJSON())
+        response.json(profile)
       } else {
         response.status(404).end()
       }})
@@ -41,18 +41,20 @@ exports.createProfile = async (request, response) => {
   //TODO: add condition validating if username already exists
 
   const newProfile = {
-    'name': body.nickname,
+    'username': body.username,
     'age': body.age,
     'profiletext': body.profiletext
   }
   
   knex('profiles')
     .insert(newProfile)
-    .then((saved) => {
-      response.json(saved.toJSON())
+    .then(() => {
+      response.json(`Success adding profile with name ${body.username}`)
     })
     .catch(err => {
-      response.json({ message: `Error: ${err}` })
+      return response
+      .status(400)
+      .json({ message: `Error: ${err}` })
     })
 }
 

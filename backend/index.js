@@ -12,15 +12,14 @@ app.use(bodyParser.json())
 app.use('/profiles', profilesRouter)
 
 //TODO: implement these in middleware, keep for now
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   console.error(err.stack)
   res.status(500).send('Server error')
 })
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
   res.status(404).send('Page not found!')
 })
-
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

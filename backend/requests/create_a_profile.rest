@@ -1,1 +1,8 @@
-POST http://localhost:3001/profiles/
+POST http://localhost:3001/profiles/create
+Content-Type: application/json
+
+{
+    "username": "akadora",
+    "age": 30,
+    "profiletext": "I'm a cat."
+}

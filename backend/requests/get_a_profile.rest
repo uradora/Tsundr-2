@@ -1,1 +1,6 @@
-GET http://localhost:3001/profiles/1
+GET http://localhost:3001/profiles/one
+Content-Type: application/json
+
+{
+    "id": 5
+}
