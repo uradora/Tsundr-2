@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import profileService from './../services/profiles'
 
 const Profilecard = ({username, age, profiletext}) => {
@@ -11,7 +11,8 @@ const Profilecard = ({username, age, profiletext}) => {
     borderWidth: 1,
     marginBottom: 5,
     paddingBottom: 5,
-    width: "fit-content",
+    width: 400,
+    length: 400
   }
 
   return (
