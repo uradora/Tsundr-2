@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import profileService from './services/profiles'
 import Profilecards from './components/Profilecards'
-import PersonIcon from '@material-ui/icons/Person'
-import ForumIcon from '@material-ui/icons/Forum'
-import IconButton from '@material-ui/core/IconButton'
 import './styles/header.css'
 
 const App = () => {
@@ -50,23 +47,6 @@ const App = () => {
     <div><h2>Chat page here</h2></div>
   )
 
-  const Header = () => {
-    return (
-      <div className='header'>
-        <IconButton onClick={toPage('profile')}>
-          <PersonIcon className='headericon' fontSize='medium' />
-        </IconButton>
-        <a href="" onClick={toPage('home')}>
-          <h2>OwO</h2>
-        </a>
-        <IconButton onClick={toPage('chats')}>
-          <ForumIcon className='headericon' fontSize='medium' />
-        </IconButton>
-      </div>
-    )
-  }
-  
-
   const pageContent = () => {
     if (page == 'home') {
       return <Profilecards profiles={profiles} />
@@ -78,8 +58,7 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <Header />
+    <div className="list-wrapper">
       {pageContent()}
     </div>
   )

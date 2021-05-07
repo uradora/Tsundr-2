@@ -1,4 +1,6 @@
 const knex = require('./../db/db.js')
+const bcrypt = require('bcrypt')
+const usersRouter = require('express').Router()
 
 exports.getAll = async (request, response) => {
   knex
@@ -30,18 +32,8 @@ exports.getProfile = async ( request, response) => {
 exports.createProfile = async (request, response) => {
   const body = request.body
 
-  if (body.username === undefined) {
-    return response.status(400).json({ error: "Missing required field!" });
-  }
-  if (body.username.length < 3) {
-    return response
-      .status(400)
-      .json({ error: "Username must be at least 3 characters long!" });
-  }
-  //TODO: add condition validating if username already exists
-
   const newProfile = {
-    'username': body.username,
+    'nickname': body.nickname,
     'age': body.age,
     'profiletext': body.profiletext
   }
@@ -49,7 +41,7 @@ exports.createProfile = async (request, response) => {
   knex('profiles')
     .insert(newProfile)
     .then(() => {
-      response.json(`Success adding profile with name ${body.username}`)
+      response.json(`Profiilin nimeltä ${body.nickname} lisääminen onnistui`)
     })
     .catch(err => {
       return response

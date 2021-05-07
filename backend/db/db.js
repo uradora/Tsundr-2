@@ -16,9 +16,15 @@ knex.schema
       if (!exists) {
         return knex.schema.createTable('profiles', (table)  => {
           table.increments('id').primary()
-          table.string('username')
+          table.string('nickname')
           table.integer('age')
           table.string('profiletext')
+          table
+            .uuid('user_id')
+            .notNullable()
+            .references('id')
+            .inTable('users')
+            .onDelete('CASCADE')
         })
         .then(() => {
           console.log('Table \'Profiles\' created')
@@ -34,6 +40,31 @@ knex.schema
     .catch((error) => {
       console.error(`Cannot open: ${error}`)
     })
+
+  knex.schema
+    .hasTable('users')
+    .then((exists) => {
+      if (!exists) {
+        return knex.schema.createTable('users', (table)  => {
+          table.increments('id').primary()
+          table.string('username')
+          table.integer('password')
+        })
+        .then(() => {
+          console.log('Table \'Users\' created')
+        })
+        .catch((error) => {
+          console.error(`Cannot create table: ${error}`)
+        })
+      }
+    })
+    .then(() => {
+      console.log('Ready!')
+    })
+    .catch((error) => {
+      console.error(`Cannot open: ${error}`)
+    })
+
 
 knex.select('*').from('profiles')
   .then(data => console.log('data:', data))

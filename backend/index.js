@@ -2,6 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const profilesRouter = require('./routes/profiles-route')
+const usersRouter = require('./routes/users-route')
+const loginRouter = require('./routes/login-route')
+const config = require('./utils/config')
 
 const app = express()
 
@@ -10,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/profiles', profilesRouter)
+app.use('/users', usersRouter)
+app.use('/login', loginRouter)
 
 //TODO: implement these in middleware, keep for now
 app.use(function (err, req, res) {
@@ -21,7 +26,7 @@ app.use(function (req, res) {
   res.status(404).send('Page not found!')
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = config.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

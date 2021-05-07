@@ -1,0 +1,6 @@
+GET http://localhost:3001/users/one
+Content-Type: application/json
+
+{
+    "username": "mer"
+}
