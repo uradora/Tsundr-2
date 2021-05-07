@@ -16,15 +16,14 @@ app.use('/profiles', profilesRouter)
 app.use('/users', usersRouter)
 app.use('/login', loginRouter)
 
-//TODO: implement these in middleware, keep for now
-app.use(function (err, req, res) {
+/*app.use(function (err, req, res) {
   console.error(err.stack)
   res.status(500).send('Server error')
 })
 
 app.use(function (req, res) {
   res.status(404).send('Page not found!')
-})
+})*/
 
 const PORT = config.PORT || 3001
 app.listen(PORT, () => {
