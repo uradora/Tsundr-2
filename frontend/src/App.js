@@ -54,9 +54,9 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
-    //TODO: fix login
+    //TODO: fix login, also it should proably take id, not username
     //create registration form
-    
+
     try {
       const user = await loginService.login({
         username,
@@ -151,23 +151,17 @@ const App = () => {
         <div className='card'>
           <form noValidate autoComplete="off" onSubmit={handleLogin}>
             <div>
-            <TextField id="standard-basic" label="Käyttäjänimi">
-              <input
-                type='text'
+            <TextField id="standard-basic" label="Käyttäjänimi" type='text'
                 value={username}
                 name='Username'
-                onChange={({ target }) => setUsername(target.value)}
-              />
+                onChange={({ target }) => setUsername(target.value)}>
             </TextField>
             </div>
             <div>
-            <TextField id="standard-basic" label="Salasana">
-              <input
-                type='password'
+            <TextField id="standard-basic" label="Salasana" type='password'
                 value={password}
                 name='password'
-                onChange={({ target }) => setPassword(target.value)}
-              />
+                onChange={({ target }) => setPassword(target.value)}>
             </TextField>
             </div>
             <Button variant='outlined' color='default' type='submit'>
