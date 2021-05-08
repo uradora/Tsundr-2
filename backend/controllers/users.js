@@ -1,7 +1,8 @@
 const knex = require('./../db/db.js')
 const bcrypt = require('bcrypt')
+const usersRouter = require('express').Router()
 
-exports.getAll = async (request, response) => {
+usersRouter.get('/', async (request, response) => {
   knex
     .select('*')
     .from('users')
@@ -11,11 +12,11 @@ exports.getAll = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.getUser = async ( request, response) => {
+usersRouter.get('/:id', async (request, response) => {
   knex('users')
-    .where('id', request.body.id)  
+    .where('id', request.params.id)  
     .then((user) => {
       if (user) {
         response.json(user)
@@ -25,9 +26,9 @@ exports.getUser = async ( request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.createUser = async (request, response) => {
+usersRouter.post('/', async (request, response) => {
   const body = request.body
 
   const saltRounds = 10
@@ -63,12 +64,11 @@ exports.createUser = async (request, response) => {
 
       }
     })  
+})
 
-}
-
-exports.deleteUser = async (request, response) => {
+usersRouter.delete('/:id', async (request, response) => {
   knex('users')
-    .where('id', request.body.id)  
+    .where('id', request.params.id)  
     .del()
     .then(message => {
       if (message === 1) {
@@ -80,4 +80,6 @@ exports.deleteUser = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
+
+module.exports = usersRouter

@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const profilesRouter = require('./routes/profiles-route')
-const usersRouter = require('./routes/users-route')
-const loginRouter = require('./routes/login-route')
+const profilesRouter = require('./controllers/profiles')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 const config = require('./utils/config')
 
 const app = express()

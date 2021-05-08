@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import profileService from './services/profiles'
+import userService from './services/users'
 import loginService from './services/login'
 import Profilecards from './components/Profilecards'
 import Header from './components/Header'
+import { TextField, Button } from '@material-ui/core/'
 import './styles/header.css'
 import './styles/app.css'
 
@@ -31,24 +33,48 @@ const App = () => {
     }
   }, [])
 
+  const createUser = () => {
+
+    const newUser = {
+      'username': username,
+      'password': password
+    }
+    
+    userService
+      .createUser(newUser)
+      .then(returnedUser => {
+        handleLogin()
+      })
+      .catch(err => {
+        console.log(`Error: ${err}`)
+      })
+
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
+    //TODO: fix login
+    //create registration form
+    
     try {
       const user = await loginService.login({
         username,
         password
       })
-
+      
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-      console.log(user.id)
-      console.log(profileService.getByUserId(user.id).then(returnedProfile => { console.log(returnedProfile)}))
-      /*if (!(profileService.getProfile(user.id))) {
-        setProfileFormVisible(true)
-      }*/
       setUser(user)
       setUsername('')
       setPassword('')
+
+      profileService.getByUserId(user.id)
+        .then(returnedProfile => {
+          if (returnedProfile.length <= 0) {
+            setProfileFormVisible(true)
+          }
+        })
+
     } catch (err) {
       console.log(`Error: ${err}`)
     }
@@ -123,26 +149,30 @@ const App = () => {
       <Header />
       <div className='container'>
         <div className='card'>
-          <form onSubmit={handleLogin}>
+          <form noValidate autoComplete="off" onSubmit={handleLogin}>
             <div>
-            käyttäjänimi
-            <input
-              type='text'
-              value={username}
-              name='Username'
-              onChange={({ target }) => setUsername(target.value)}
-            />
+            <TextField id="standard-basic" label="Käyttäjänimi">
+              <input
+                type='text'
+                value={username}
+                name='Username'
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </TextField>
             </div>
             <div>
-            salasana
-            <input
-              type='password'
-              value={password}
-              name='Password'
-              onChange={({ target }) => setPassword(target.value)}
-            />
+            <TextField id="standard-basic" label="Salasana">
+              <input
+                type='password'
+                value={password}
+                name='password'
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </TextField>
             </div>
-            <button type='submit'>kirjaudu</button>
+            <Button variant='outlined' color='default' type='submit'>
+              Kirjaudu sisään
+            </Button>
           </form>
           </div>
         </div>
@@ -168,7 +198,7 @@ const App = () => {
             <div>
             ikä
             <input
-              type='age'
+              type='text'
               value={age}
               name='age'
               onChange={({ target }) => setAge(target.value)}
@@ -177,8 +207,8 @@ const App = () => {
             <div>
             profiiliteksti
             <input
-              type='profiletext'
-              value={password}
+              type='text'
+              value={profiletext}
               name='profiletext'
               onChange={({ target }) => setProfiletext(target.value)}
             />
@@ -201,9 +231,6 @@ const App = () => {
       </div>
     )
   }
-
-
 }
-
 
 export default App

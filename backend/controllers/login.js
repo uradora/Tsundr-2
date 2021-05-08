@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 
-exports.login = async (request, response) => {
+loginRouter.post('/', async (request, response) => {
   const body = request.body
 
   knex('users')
@@ -38,5 +38,8 @@ exports.login = async (request, response) => {
          .json({ message: `Väärä käyttäjätunnus`})
       }
     })  
-}
+})
+
+module.exports = loginRouter
+
     

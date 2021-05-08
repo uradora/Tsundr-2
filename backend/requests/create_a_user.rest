@@ -1,8 +1,8 @@
-POST http://localhost:3001/users/create
+POST http://localhost:3001/users/
 Content-Type: application/json
 
 {
-    "username": "meri",
+    "username": "uusi",
     "password": "lol"
 
 }

@@ -1,6 +1,1 @@
-DELETE http://localhost:3001/users/delete
-Content-Type: application/json
-
-{
-    "id": 20
-}
+DELETE http://localhost:3001/users/3

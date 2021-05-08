@@ -1,9 +1,9 @@
-POST http://localhost:3001/profiles/create
+POST http://localhost:3001/profiles/
 Content-Type: application/json
 
 {
-    "nickname": "meri",
+    "nickname": "viljo",
     "age": 29,
     "profiletext": "I'm a lizard.",
-    "user_id": 20
+    "user_id": 2
 }

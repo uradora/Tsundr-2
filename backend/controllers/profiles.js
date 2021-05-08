@@ -1,9 +1,7 @@
 const knex = require('./../db/db.js')
-const bcrypt = require('bcrypt')
-const { request } = require('express')
-const usersRouter = require('express').Router()
+const profilesRouter = require('express').Router()
 
-exports.getAll = async (request, response) => {
+profilesRouter.get('/', async (request, response) => {
   knex
     .select('*')
     .from('profiles')
@@ -13,11 +11,12 @@ exports.getAll = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.getProfile = async (request, response) => {
+profilesRouter.get('/:id', async (request, response) => {
+  console.log(request.body)
   knex('profiles')
-    .where('id', request.body.id)  
+    .where('id', request.params.id)  
     .then((profile) => {
       if (profile) {
         response.json(profile)
@@ -27,11 +26,11 @@ exports.getProfile = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.getByUserId = async (request, response) => {
+profilesRouter.get('/byuserid/:user_id', async (request, response) => {
   knex('profiles')
-    .where('user_id', request.body.user_id)
+    .where('user_id', request.params.user_id)
     .then((profile) => {
       if (profile) {
         response.json(profile)
@@ -41,15 +40,15 @@ exports.getByUserId = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.createProfile = async (request, response) => {
+profilesRouter.post('/', async (request, response) => {
   const body = request.body
 
   if (body.nickname === undefined) {
     return response.status(400).json({ error: "Nimerkki puuttui!" });
   }
-  if (body.username.length < 3) {
+  if (body.nickname.length < 3) {
     return response
       .status(400)
       .json({ error: "Nimimerkin pitää olla ainakin 3 merkin pituisia!" });
@@ -72,11 +71,11 @@ exports.createProfile = async (request, response) => {
       .status(400)
       .json({ message: `Error: ${err}` })
     })
-}
+})
 
-exports.deleteProfile = async (request, response) => {
+profilesRouter.delete('/:id', async (request, response) => {
   knex('profiles')
-    .where('id', request.body.id)  
+    .where('id', request.params.id)  
     .del()
     .then(message => {
       if (message === 1) {
@@ -88,8 +87,10 @@ exports.deleteProfile = async (request, response) => {
     .catch(err => {
       response.json({ message: `Error: ${err}` })
     })
-}
+})
 
 
 //TODO: add a route for modifying own profile
+
+module.exports = profilesRouter
 
