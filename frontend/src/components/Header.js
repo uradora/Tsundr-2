@@ -1,19 +1,15 @@
 import React from 'react'
 import './../styles/header.css'
-import PersonIcon from '@material-ui/icons/Person'
-import ForumIcon from '@material-ui/icons/Forum'
-import IconButton from '@material-ui/core/IconButton'
+import { MdPerson } from "react-icons/md"
+import { MdMessage } from "react-icons/md"
+import { MdHome } from "react-icons/md"
 
 const Header = () => {
   return (
     <div className='header'>
-      <IconButton>
-        <PersonIcon className='headericon' fontSize='medium' />
-      </IconButton>
-      <h2>OwO</h2>
-      <IconButton>
-        <ForumIcon className='headericon' fontSize='medium' />
-      </IconButton>
+      <MdPerson className='headericon' />
+      <MdHome className='headericon' />
+      <MdMessage className='headericon'/>
     </div>
   )
 }

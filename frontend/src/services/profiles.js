@@ -14,10 +14,18 @@ const getProfile = async (id) => {
   return response.data
 }
 
+const getByUserId = async (user_id) => {
+  const config = {
+    body: { "user_id": user_id }
+  }
+  const response = await axios.get(`${baseUrl}/byuserid`, config)
+  return response.data
+}
+
 const createProfile = async (username, age, profiletext) => {
   const response = await axios.post(`${baseUrl}/create`, newProfile)
   response.data.headers['Content-Type']
   return response.data
 }
 
-export default { getAll, getProfile, createProfile }
+export default { getAll, getProfile, getProfileIdByUserId, createProfile }

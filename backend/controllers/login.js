@@ -20,7 +20,7 @@ exports.login = async (request, response) => {
               const token = jwt.sign(userForToken, process.env.SECRET)
               response
                 .status(200)
-                .send({ token, username: user[0].username })
+                .send({ token, username: user[0].username, id: user[0].id })
             } else {
                 return response
                   .status(401)
