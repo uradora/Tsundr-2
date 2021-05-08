@@ -11,7 +11,7 @@ const Profilecards = ({profiles}) => {
             profiles.map((profile) => (
               <Profilecard
                 key={profile.id}
-                username={profile.username}
+                nickname={profile.nickname}
                 age={profile.age}
                 profiletext={profile.profiletext}
                 //handleSeeProfile={props.handleSeeProfile}
@@ -20,7 +20,7 @@ const Profilecards = ({profiles}) => {
             )
           ) : (
             <tr className="table-row">
-              <td className="table-item" style={{ textAlign: 'center' }} colSpan={6}>No users to show...</td>
+              <td className="table-item" style={{ textAlign: 'center' }} colSpan={6}>Ei profiileja näytettäväksi...</td>
             </tr>
           )
         }

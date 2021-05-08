@@ -28,4 +28,4 @@ const createProfile = async (username, age, profiletext) => {
   return response.data
 }
 
-export default { getAll, getProfile, getProfileIdByUserId, createProfile }
+export default { getAll, getProfile, getByUserId, createProfile }

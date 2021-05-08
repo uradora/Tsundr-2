@@ -40,15 +40,12 @@ const App = () => {
         password
       })
 
-      //TODO: need to get profile by user id, not profile id.
-      //implement all methods
-      
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       console.log(user.id)
-      console.log(profileService.getProfile(user.id).then(returnedProfile => { console.log(returnedProfile)}))
-      if (!(profileService.getProfile(user.id))) {
+      console.log(profileService.getByUserId(user.id).then(returnedProfile => { console.log(returnedProfile)}))
+      /*if (!(profileService.getProfile(user.id))) {
         setProfileFormVisible(true)
-      }
+      }*/
       setUser(user)
       setUsername('')
       setPassword('')
@@ -79,7 +76,15 @@ const App = () => {
   }
   */
 
-  const addProfile = (newProfile) => {
+  const addProfile = () => {
+
+    const newProfile = {
+      'nickname': nickname,
+      'age': age,
+      'profiletext': profiletext,
+      'user_id': user.id
+    }
+    
     profileService
       .createProfile(newProfile)
       .then(returnedProfile => {
@@ -120,7 +125,7 @@ const App = () => {
         <div className='card'>
           <form onSubmit={handleLogin}>
             <div>
-            username
+            käyttäjänimi
             <input
               type='text'
               value={username}
@@ -129,15 +134,15 @@ const App = () => {
             />
             </div>
             <div>
-              password
-              <input
-                type='password'
-                value={password}
-                name='Password'
-                onChange={({ target }) => setPassword(target.value)}
-              />
+            salasana
+            <input
+              type='password'
+              value={password}
+              name='Password'
+              onChange={({ target }) => setPassword(target.value)}
+            />
             </div>
-            <button type='submit'>login</button>
+            <button type='submit'>kirjaudu</button>
           </form>
           </div>
         </div>
@@ -151,7 +156,7 @@ const App = () => {
         <div className='card'>
           <form onSubmit={addProfile}>
             <div>
-            nickname
+            nimimerkki
             <input
               type='text'
               value={nickname}
@@ -161,24 +166,24 @@ const App = () => {
             />
             </div>
             <div>
-              age
-              <input
-                type='age'
-                value={age}
-                name='age'
-                onChange={({ target }) => setAge(target.value)}
-              />
+            ikä
+            <input
+              type='age'
+              value={age}
+              name='age'
+              onChange={({ target }) => setAge(target.value)}
+            />
             </div>
             <div>
-              profile text
-              <input
-                type='profiletext'
-                value={password}
-                name='profiletext'
-                onChange={({ target }) => setProfiletext(target.value)}
-              />
+            profiiliteksti
+            <input
+              type='profiletext'
+              value={password}
+              name='profiletext'
+              onChange={({ target }) => setProfiletext(target.value)}
+            />
             </div>
-            <button type='submit'>create profile</button>
+            <button type='submit'>luo profiili</button>
           </form>
           </div>
         </div>

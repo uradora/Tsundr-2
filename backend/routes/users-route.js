@@ -8,4 +8,6 @@ router.get('/one', userRoutes.getUser)
 
 router.post('/create', userRoutes.createUser)
 
+router.delete('/delete', userRoutes.deleteUser)
+
 module.exports = router

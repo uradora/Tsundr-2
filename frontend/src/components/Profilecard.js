@@ -6,7 +6,7 @@ const Profilecard = (props) => {
   return (
     <div className='card'>
     
-      {props.username}
+      {props.nickname}
       <br />
       {props.age}
       <br />

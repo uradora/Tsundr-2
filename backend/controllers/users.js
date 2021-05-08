@@ -65,3 +65,19 @@ exports.createUser = async (request, response) => {
     })  
 
 }
+
+exports.deleteUser = async (request, response) => {
+  knex('users')
+    .where('id', request.body.id)  
+    .del()
+    .then(message => {
+      if (message === 1) {
+        return response.status(200).json(`Poisto onnistui`)
+      } else {
+        return response.status(404).json(`Poisto ei onnistunut`)
+      }
+    })
+    .catch(err => {
+      response.json({ message: `Error: ${err}` })
+    })
+}

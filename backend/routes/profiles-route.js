@@ -10,4 +10,6 @@ router.get('/byuserid', profilesRoutes.getByUserId)
 
 router.post('/create', profilesRoutes.createProfile)
 
+router.delete('/delete', profilesRoutes.deleteProfile)
+
 module.exports = router

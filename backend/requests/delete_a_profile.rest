@@ -1,0 +1,6 @@
+DELETE http://localhost:3001/profiles/delete
+Content-Type: application/json
+
+{
+    "id": 16
+}
