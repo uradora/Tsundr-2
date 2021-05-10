@@ -2,6 +2,6 @@ POST http://localhost:3001/login/
 Content-Type: application/json
 
 {
-  "username": "meri",
-  "password": "kek"
+  "username": "ura-acca",
+  "password": "lol"
 }

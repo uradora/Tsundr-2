@@ -2,8 +2,8 @@ POST http://localhost:3001/profiles/
 Content-Type: application/json
 
 {
-    "nickname": "viljo",
+    "nickname": "meri",
     "age": 29,
-    "profiletext": "I'm a lizard.",
+    "profiletext": "I'm a nerd.",
     "user_id": 2
 }

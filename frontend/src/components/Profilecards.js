@@ -1,6 +1,6 @@
 import React from 'react'
 import Profilecard from './Profilecard'
-import './../styles/profilecards.css'
+import './../styles/app.css'
 
 const Profilecards = ({profiles}) => {
 
