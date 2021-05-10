@@ -4,6 +4,7 @@ const cors = require('cors')
 const profilesRouter = require('./controllers/profiles')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const imagesRouter = require('./controllers/images')
 const config = require('./utils/config')
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 app.use('/profiles', profilesRouter)
 app.use('/users', usersRouter)
 app.use('/login', loginRouter)
+app.use('/images', imagesRouter)
 
 /*app.use(function (err, req, res) {
   console.error(err.stack)

@@ -65,8 +65,33 @@ knex.schema
       console.error(`Cannot open: ${error}`)
     })
 
+    knex.schema
+    .hasTable('images')
+    .then((exists) => {
+      if (!exists) {
+        return knex.schema.createTable('images', (table)  => {
+          table.increments('id').primary()
+          table.string('filename').notNullable()
+          table.string('filepath').notNullable()
+          table.string('mimetype').notNullable()
+          table.integer('size').notNullable()
+        })
+        .then(() => {
+          console.log('Table \'Images\' created')
+        })
+        .catch((error) => {
+          console.error(`Cannot create table: ${error}`)
+        })
+      }
+    })
+    .then(() => {
+      console.log('Ready!')
+    })
+    .catch((error) => {
+      console.error(`Cannot open: ${error}`)
+    })
 
-knex.select('*').from('profiles')
+knex.select('*').from('images')
   .then(data => console.log('data:', data))
   .catch(err => console.log(err))
 
