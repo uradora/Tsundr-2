@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Profilecards from './components/Profilecards'
 import LoginForm from './components/LoginForm'
 import ProfileForm from './components/ProfileForm'
+import { Button } from '@material-ui/core/'
 import './styles/header.css'
 import './styles/app.css'
 
@@ -94,9 +95,7 @@ const App = () => {
 
   const handleFileUpload = () => {
 
-    uploadService.fileUpload(currentFile, (event) => {
-      console.log(event)
-    })
+    uploadService.fileUpload(currentFile)
       .then((response) => {
         console.log(response)
       })
@@ -143,7 +142,28 @@ const App = () => {
                 handleAgeChange={({ target }) => setAge(target.value)}
                 handleProfiletextChange={({ target }) => setProfiletext(target.value)}
               />
+              <br />
+              <div>
+                <label>
+                   <input type='file' name='image' accept='image/*' onChange={handleFileChange} />
+                </label>
+              </div>
+              <div>
+                <br />
+                <Button variant='outlined' color='default' type='submit'
+                  disabled={!currentFile}
+                  onClick={handleFileUpload}>
+                  Lisää kuva
+                </Button>
+              </div>
            </div>
+          </div>
+          <div>
+            {imagetoShow && (
+            <div>
+              <img src={imagetoShow} alt=""/>
+            </div>
+            )}
           </div>
         </div>
     )
@@ -156,25 +176,6 @@ const App = () => {
           {user.username} kirjautunut
           <br />
           <button onClick={handleLogout}>kirjaudu ulos</button>
-          <div>
-            <label>
-              <input type='file' name='image' accept='image/*' onChange={handleFileChange} />
-            </label>
-          </div>
-          <div>
-            <button
-              disabled={!currentFile}
-              onClick={handleFileUpload}>
-              Lisää kuva
-            </button>
-          </div>
-          <div>
-            {imagetoShow && (
-            <div>
-              <img src={imagetoShow} alt="" />
-            </div>
-            )}
-          </div>
        </div>
       </div>
     )
