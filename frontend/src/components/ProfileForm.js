@@ -9,7 +9,11 @@ const ProfileForm = ({
   handleProfiletextChange,
   nickname,
   age,
-  profiletext
+  profiletext,
+  handleFileChange,
+  currentFile,
+  handleFileUpload,
+  imagetoShow
 }) => {
   return (
     <div>
@@ -39,7 +43,7 @@ const ProfileForm = ({
             Luo profiili
           </Button>
         </form>
-        </div>
+    </div>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import profileService from './services/profiles'
 import userService from './services/users'
 import loginService from './services/login'
+import uploadService from './services/fileupload'
 import Header from './components/Header'
 import Profilecards from './components/Profilecards'
 import LoginForm from './components/LoginForm'
@@ -17,10 +18,14 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [nickname, setNickname] = useState('')
   const [age, setAge] = useState('')
+  const [currentFile, setCurrentFile] = useState(null)
   const [profiletext, setProfiletext] = useState('')
+  const [imagetoShow, setImageToShow] = useState(null)
+  const [files, setFiles] = useState([])
 
   useEffect(() => {
     profileService.getAll().then((profiles) => setProfiles(profiles))
+    uploadService.getAll().then((files) => setFiles(files.data))
   }, [])
 
   useEffect(() => {
@@ -82,6 +87,30 @@ const App = () => {
     window.localStorage.removeItem('loggedInUser');
   }
   
+  const handleFileChange = (event) => {
+    setCurrentFile(event.target.files[0])
+    setImageToShow(URL.createObjectURL(event.target.files[0]))
+  }
+
+  const handleFileUpload = () => {
+
+    uploadService.fileUpload(currentFile, (event) => {
+      console.log(event)
+    })
+      .then((response) => {
+        console.log(response)
+      })
+      uploadService.getAll()
+      .then((files) => {
+        setFiles(files.data)
+      })
+      .catch((err) => {
+        setCurrentFile(null)
+        console.log(`Ei voitu ladata`)
+      })
+
+  }
+
   if (user === null && !profileFormVisible) {
     return (
     <div>
@@ -120,12 +149,34 @@ const App = () => {
     )
   } else {
     return (
+      <div>
+        <Header />
         <div className="list-wrapper">
           <Profilecards profiles={profiles} />
           {user.username} kirjautunut
           <br />
           <button onClick={handleLogout}>kirjaudu ulos</button>
-        </div>
+          <div>
+            <label>
+              <input type='file' name='image' accept='image/*' onChange={handleFileChange} />
+            </label>
+          </div>
+          <div>
+            <button
+              disabled={!currentFile}
+              onClick={handleFileUpload}>
+              Lisää kuva
+            </button>
+          </div>
+          <div>
+            {imagetoShow && (
+            <div>
+              <img src={imagetoShow} alt="" />
+            </div>
+            )}
+          </div>
+       </div>
+      </div>
     )
   }
 }

@@ -31,14 +31,14 @@ imagesRouter.get('/', async (request, response) => {
 })
 
 imagesRouter.post('/upload', imageUpload.single('image'), (request, response) => {
-  const { filename, mimetype, size } = request.file
+  console.log(request.file)
   const filepath = request.file.path
 
   const newImage = {
-    'filename': filename,
+    'filename': request.file.name,
     'filepath': filepath,
-    'mimetype': mimetype,
-    'size': size
+    'mimetype': request.file.type,
+    'size': request.file.size
   }
 
   knex('images')
@@ -46,11 +46,11 @@ imagesRouter.post('/upload', imageUpload.single('image'), (request, response) =>
     .then(() => 
     response
       .status(200)
-      .json(`Kuvan ${filename} lisääminen onnistui`))
+      .json(`Kuvan ${request.file.name} lisääminen onnistui`))
     .catch((err) => {
       response
         .status(400)
-        .json(`Kuvan ${filename} lisääminen ei onnistunut: ${err}`)
+        .json(`Kuvan ${request.file.name} lisääminen ei onnistunut: ${err}`)
     })
 
 })

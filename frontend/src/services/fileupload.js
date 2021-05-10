@@ -6,14 +6,14 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-const fileUpload = async (file) => {
+const fileUpload = async (image) => {
   const formData = new FormData()
 
-  formData.append('file', file)
+  formData.append('image', image)
 
   const response = await axios.post(`${baseUrl}/upload`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'form-data'
     }
   })
   return response.data
