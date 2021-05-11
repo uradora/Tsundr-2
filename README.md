@@ -1,7 +1,7 @@
 # Tsundr-2
 Like Tinder, but more anime. WIP.
 
-# TODO:
+# Ominaisuudet:
 
 - [x] Käyttäjä voi rekisteröityä ja kirjautua sisään.
 - [x] Käyttäjä voi selata muiden käyttäjien profiileja.
