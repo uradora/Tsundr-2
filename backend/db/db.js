@@ -25,7 +25,7 @@ knex.schema
             .references('id')
             .inTable('users')
             .onDelete('CASCADE')
-        })
+          })
         .then(() => {
           console.log('Table \'Profiles\' created')
         })
@@ -71,10 +71,16 @@ knex.schema
       if (!exists) {
         return knex.schema.createTable('images', (table)  => {
           table.increments('id').primary()
-          table.string('filename').notNullable()
+          table.string('filename').notNullable().unique()
           table.string('filepath').notNullable()
           table.string('mimetype').notNullable()
           table.integer('size').notNullable()
+          table
+            .uuid('profile_id')
+            .notNullable()
+            .references('id')
+            .inTable('profiles')
+            .onDelete('CASCADE')
         })
         .then(() => {
           console.log('Table \'Images\' created')

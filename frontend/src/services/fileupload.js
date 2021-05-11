@@ -6,9 +6,10 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-const fileUpload = async (image) => {
+const fileUpload = async (image, profile_id) => {
   const formData = new FormData()
 
+  formData.append('profile_id', profile_id)
   formData.append('image', image)
 
   const response = await axios.post(`${baseUrl}/upload`, formData, {

@@ -10,10 +10,7 @@ const ProfileForm = ({
   nickname,
   age,
   profiletext,
-  handleFileChange,
-  currentFile,
-  handleFileUpload,
-  imagetoShow
+  currentFile
 }) => {
   return (
     <div>
@@ -39,7 +36,8 @@ const ProfileForm = ({
               onChange={handleProfiletextChange}>
           </TextField>
           </div>
-          <Button variant='outlined' color='default' type='submit'>
+          <Button variant='outlined' color='default' type='submit'
+            disabled={!currentFile}>
             Luo profiili
           </Button>
         </form>

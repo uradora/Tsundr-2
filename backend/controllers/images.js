@@ -1,7 +1,6 @@
 const knex = require('./../db/db.js')
 const imagesRouter = require('express').Router()
 const multer = require('multer')
-const { request, response } = require('express')
 const path = require('path')
 
 const imageUpload = multer({
@@ -21,7 +20,6 @@ const imageUpload = multer({
 imagesRouter.get('/', async (request, response) => {
   knex('images')
     .select('*')
-    .from('images')
     .then(imageData => {
       response.json(imageData)
     })
@@ -31,7 +29,6 @@ imagesRouter.get('/', async (request, response) => {
 })
 
 imagesRouter.post('/upload', imageUpload.single('image'), (request, response) => {
-  console.log(request)
   const { filename, mimetype, size } = request.file
   const filepath = request.file.path
 
@@ -39,7 +36,8 @@ imagesRouter.post('/upload', imageUpload.single('image'), (request, response) =>
     'filename': filename,
     'filepath': filepath,
     'mimetype': mimetype,
-    'size': size
+    'size': size,
+    'profile_id': request.body.profile_id
   }
 
   knex('images')

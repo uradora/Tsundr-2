@@ -3,8 +3,8 @@ const profilesRouter = require('express').Router()
 
 profilesRouter.get('/', async (request, response) => {
   knex
-    .select('*')
-    .from('profiles')
+  .select('*')
+  .from('profiles')
     .then(profileData => {
       response.json(profileData)
     })
@@ -13,8 +13,22 @@ profilesRouter.get('/', async (request, response) => {
     })
 })
 
+profilesRouter.get('/:id/images', async (request, response) => {
+  knex('images')
+    .where('profile_id', request.params.id)  
+    .then((profile) => {
+      if (profile) {
+        response.json(profile)
+      } else {
+        response.status(404).end()
+      }})
+    .catch(err => {
+      response.json({ message: `Error: ${err}` })
+    })
+})
+
+
 profilesRouter.get('/:id', async (request, response) => {
-  console.log(request.body)
   knex('profiles')
     .where('id', request.params.id)  
     .then((profile) => {
@@ -46,7 +60,7 @@ profilesRouter.post('/', async (request, response) => {
   const body = request.body
 
   if (body.nickname === undefined) {
-    return response.status(400).json({ error: "Nimerkki puuttui!" });
+    return response.status(400).json({ error: "Nimimerkki puuttui!" });
   }
   if (body.nickname.length < 3) {
     return response

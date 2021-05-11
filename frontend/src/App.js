@@ -7,7 +7,6 @@ import Header from './components/Header'
 import Profilecards from './components/Profilecards'
 import LoginForm from './components/LoginForm'
 import ProfileForm from './components/ProfileForm'
-import { Button } from '@material-ui/core/'
 import './styles/header.css'
 import './styles/app.css'
 
@@ -26,15 +25,16 @@ const App = () => {
 
   useEffect(() => {
     profileService.getAll().then((profiles) => setProfiles(profiles))
-    uploadService.getAll().then((files) => setFiles(files.data))
-  }, [])
+    uploadService.getAll().then((files) => setFiles(files))
+    console.log(files)
+    }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      //userService.setToken(user.token);
+      //userService.setToken(user.token)
     }
   }, [])
 
@@ -70,17 +70,23 @@ const App = () => {
       'profiletext': profiletext,
       'user_id': user.id
     }
-    
-    profileService
+
+    try {
+      
+      profileService
       .createProfile(newProfile)
       .then(returnedProfile => {
-        handleFileUpload()
+        handleFileUpload(returnedProfile.id)
         setProfiles(profiles.concat(returnedProfile))
         setProfileFormVisible(false)
       })
       .catch(err => {
         console.log(`Error: ${err}`)
       })
+    } catch (err) {
+      console.log(`Error: ${err}`)
+    }
+
   } 
 
   const handleLogout = () => {
@@ -93,11 +99,13 @@ const App = () => {
     setImageToShow(URL.createObjectURL(event.target.files[0]))
   }
 
-  const handleFileUpload = () => {
+  const handleFileUpload = (profile_id) => {
 
-    uploadService.fileUpload(currentFile)
+    uploadService.fileUpload(currentFile, profile_id)
       .then((response) => {
         console.log(response)
+        setCurrentFile(null)
+        setImageToShow(null)
       })
       uploadService.getAll()
       .then((files) => {
@@ -141,20 +149,13 @@ const App = () => {
                 handleNicknameChange={({ target }) => setNickname(target.value)}
                 handleAgeChange={({ target }) => setAge(target.value)}
                 handleProfiletextChange={({ target }) => setProfiletext(target.value)}
+                currentFile={currentFile}
               />
               <br />
               <div>
                 <label>
                    <input type='file' name='image' accept='image/*' onChange={handleFileChange} />
                 </label>
-              </div>
-              <div>
-                <br />
-                <Button variant='outlined' color='default' type='submit'
-                  disabled={!currentFile}
-                  onClick={handleFileUpload}>
-                  Lisää kuva
-                </Button>
               </div>
            </div>
           </div>
