@@ -1,5 +1,5 @@
 # Tsundr-2
-Like Tinder, but more anime. WIP.
+Kuin Tinder, mutta animempi. WIP.
 
 # Ominaisuudet:
 
