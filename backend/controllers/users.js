@@ -58,8 +58,8 @@ usersRouter.post('/', async (request, response) => {
       } else {
         knex('users')
           .insert(newUser)
-          .then(() => {
-            response.json(`Käyttäjän ${body.username} lisääminen onnistui`)
+          .then((returnedUser) => {
+            response.json(returnedUser)
         })
 
       }

@@ -12,7 +12,7 @@ const getUser = async (id) => {
 }
 
 const createUser = async (newUser) => {
-  const response = await axios.post(baseUrl, newProfile)
+  const response = await axios.post(baseUrl, newUser)
   //response.data.headers['Content-Type']
   return response.data
 }

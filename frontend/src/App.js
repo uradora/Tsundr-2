@@ -6,15 +6,20 @@ import uploadService from './services/fileupload'
 import Header from './components/Header'
 import Profilecards from './components/Profilecards'
 import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 import ProfileForm from './components/ProfileForm'
+import { Button } from '@material-ui/core/'
 import './styles/header.css'
 import './styles/app.css'
 
 const App = () => {
   const [profiles, setProfiles] = useState([])
   const [profileFormVisible, setProfileFormVisible] = useState(false)
+  const [registerFormVisible, setRegisterFormVisible] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [registerUsername, setRegisterUsername] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
   const [user, setUser] = useState(null)
   const [nickname, setNickname] = useState('')
   const [age, setAge] = useState('')
@@ -30,7 +35,7 @@ const App = () => {
     }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedInUser');
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
@@ -89,6 +94,25 @@ const App = () => {
 
   } 
 
+  const handleRegister = () => {
+
+    const newUser = {
+      'username': registerUsername,
+      'password': registerPassword
+    }
+    
+    userService
+      .createUser(newUser)
+      .then((returnedUser) => {
+        console.log(returnedUser)
+        console.log('Nyt voi kirjautua sisään')
+      })
+      .catch(err => {
+        console.log(`Error: ${err}`)
+      })
+
+  }
+
   const handleLogout = () => {
     setUser(null);
     window.localStorage.removeItem('loggedInUser');
@@ -118,6 +142,9 @@ const App = () => {
 
   }
 
+  const hideWhenVisible = { display: registerFormVisible ? 'none' : '' }
+  const showWhenVisible = { display : registerFormVisible ? '' : 'none' }
+
   if (user === null && !profileFormVisible) {
     return (
     <div>
@@ -132,7 +159,28 @@ const App = () => {
               handlePasswordChange={({ target }) => setPassword(target.value)}
             /> 
           </div>
-        </div> 
+        </div>
+        <div className='container'>
+          <div style={hideWhenVisible}>
+            <Button variant='outlined' color='default' type='submit'
+              onClick={() => setRegisterFormVisible(true)}>
+              Luo uusi käyttäjä
+            </Button>
+          </div> 
+          <div style={showWhenVisible}>
+            <RegisterForm
+              handleRegister={handleRegister}
+              username={registerUsername}
+              password={registerPassword}
+              handleUsernameChange={({ target }) => setRegisterUsername(target.value)}
+              handlePasswordChange={({ target }) => setRegisterPassword(target.value)}
+            />
+            <Button variant='outlined' color='default' type='submit'
+              onClick={() => setRegisterFormVisible(false)}>
+              Peruuta
+            </Button>
+          </div>
+        </div>
       </div>
     ) 
   } else if (profileFormVisible) {
