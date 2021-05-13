@@ -1,5 +1,5 @@
 # Tsundr-2
-Kuin Tinder, mutta animempi. WIP.
+Kuin Tinder, mutta animempi. WIP. (Stack: React, Express, Node.js, Sqlite)
 
 # Ominaisuudet:
 
